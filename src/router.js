@@ -25,8 +25,9 @@ export default new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
 
   routes: [
-    { path: '/', component: load('aa/Login') },
-    { path: '/register', component: load('aa/register') },
+    { path: '/', name: 'login', component: load('aa/Login') },
+    { path: '/register', name: 'register', component: load('aa/register') },
+    { path: '/dashboard', name: 'dashboard', component: load('Dashboard') },
 
     // Always leave this last one
     { path: '*', component: load('Error404') } // Not found

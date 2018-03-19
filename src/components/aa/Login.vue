@@ -38,6 +38,7 @@
 </template>
 
 <script>
+  import {alertService} from '@services/AlertService';
   import {authService} from '@services/AuthService';
   export default {
     data () {
@@ -55,7 +56,23 @@
     methods: {
       login () {
         const that = this;
-        authService.login(that.form.username, that.form.password, that.$store);
+        authService.login(that.form.username, that.form.password, that.$store, function () {
+          that.$router.push({ name: 'dashboard' });
+        }, function (error) {
+          if (error.response && error.response.data && error.response.data.error_message) {
+            const errorMsg = error.response.data.error_message.toLowerCase();
+
+            if (errorMsg.indexOf('password expired') !== -1) {
+              alertService.error('Your password has expired. Please click forgot password link to reset your password.');
+            } else if (errorMsg.indexOf('failed login attempts') !== -1) {
+              alertService.error('Too many failed login attempts. Please click forgot password link to reset your password.');
+            } else {
+              alertService.error(error);
+            }
+          } else {
+            alertService.error(error);
+          }
+        });
       }
     } // methods
   }

@@ -71,9 +71,11 @@ import Quasar, {
   QOptionGroup
 } from 'quasar'
 import router from './router'
+import AuthPlugin from '@plugin/AuthPlugin';
 
 Vue.config.productionTip = false
 Vue.use(Vuex);
+Vue.use(AuthPlugin);
 Vue.use(Quasar, {
   components: {
     QLayout,
@@ -142,6 +144,21 @@ const store = new Vuex.Store({
     token: '',
     user: '',
     isAuthenticated: ''
+  },
+  getters: {
+    getUser(state) {
+      return state.user;
+    },
+  },
+
+  mutations: {
+    setToken(state, token) {
+      state.token = token;
+    },
+
+    setUser(state, user) {
+      state.user = user;
+    },
   }
 });
 

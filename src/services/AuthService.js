@@ -1,44 +1,69 @@
 'use strict'
 
-import axios from 'axios'
-import {Loading} from 'quasar'
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
+import { Loading } from 'quasar';
+import {restService} from '@services/RestService';
+import {storageService} from '@services/StorageService';
 
 class AuthService {
 
-  constructor() {
-
+  constructor () {
   }
 
+  login(username, password, store, successCallback, errorCallback) {
+    const data = {
+      username: username,
+      password: password
+    };
+
+    const config = {
+      method: 'post',
+      url: 'http://localhost:8888/login'
+    };
+
+    if (data) {
+      config.data = data;
+    }
+
+    axios.request(config).then(function (response) {
+      storageService.set('token', response.headers.authorization);
+      console.log(response.headers.authorization);
+      let user = jwtDecode(response.headers.authorization).sub;
+      storageService.set('user', user);
+      store.commit('setToken', response.headers.authorization);
+      store.commit('setUser', user);
+      return successCallback();
+    }).catch(function (error) {
+      return errorCallback(error);
+    });
+  } // login
+
+  logout(store, successCb) {
+    storageService.clearAll();
+    store.commit('setToken', null);
+    store.commit('setUser', null);
+    return successCb();
+  } // logout
+
   isAuthenticated(store) {
-    console.log(store.state);
-    let loginValue = store.state;
-    if (loginValue === true) {
+    const ssToken = storageService.get('token');
+    const ssUser = storageService.get('user');
+
+    const sToken = store.state.token;
+    const sUser = store.state.user;
+
+    if (ssToken && !sToken) {
+      store.commit('setToken', ssToken);
+      store.commit('setUser', ssUser);
+    }
+
+    if (ssToken) {
       return true;
     } else {
       return false;
     }
-  }
-
-  login(username, password, store) {
-    const that = this;
-    axios.post('http://localhost:8888/authenticate', {
-      username: username,
-      password: password
-    })
-      .then(function (response) {
-        console.log(response);
-        console.log(that.$router);
-        let isAuthenticated = response.data;
-        // store.commit('isAuthenticated', isAuthenticated);
-        if (isAuthenticated) {
-          that.$router.push({name: 'register'})
-        }
-
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-  }
+  } // isAuthenticated
 }
 
 export let authService = new AuthService();
