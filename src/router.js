@@ -25,8 +25,7 @@ export default new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
 
   routes: [
-    { path: '/', name: 'login', component: load('aa/Login') },
-    { path: '/register', name: 'register', component: load('aa/register') },
+    { path: '/', name: 'login_register', component: load('aa/LoginRegister') },
     { path: '/dashboard', name: 'dashboard', component: load('Dashboard') },
 
     // Always leave this last one

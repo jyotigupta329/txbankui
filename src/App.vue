@@ -1,8 +1,8 @@
 <template>
   <q-layout ref="layout" view="hHh LpR lFf">
-    <q-toolbar slot="header" inverted>
+    <q-toolbar slot="header" inverted v-if="authenticated">
       <q-btn flat @click="$refs.layout.toggleLeft()" v-if="authenticated" color="primary">
-        <q-icon name="menu" />
+        <q-icon name="menu"/>
       </q-btn>
 
       <q-toolbar-title>
@@ -43,7 +43,7 @@
 <script>
 
   import {authService} from '@services/AuthService'
-  import { alertService } from '@services/AlertService';
+  import {alertService} from '@services/AlertService';
   export default {
     data () {
       return {
@@ -64,14 +64,10 @@
     },
 
     methods: {
-      login () {
-        console.log(this.form.username)
-        console.log(this.form.password)
-      },
       logout() {
         const that = this;
         authService.logout(this.$store, function () {
-          that.$router.push({ name: "login" });
+          that.$router.push({name: 'login_register'});
         });
       }, // logout
     } // methods
