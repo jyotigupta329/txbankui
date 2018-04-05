@@ -39,6 +39,40 @@ class AuthService {
     });
   } // login
 
+  register(registerForm, successCallback, errorCallback) {
+    const data = {
+      firstName: registerForm.firstName,
+      lastName: registerForm.lastName,
+      username: registerForm.username,
+      password: registerForm.password,
+      dob: registerForm.dob,
+      address1: registerForm.address1,
+      address2: registerForm.address2,
+      city: registerForm.city,
+      state: registerForm.state,
+      zip: registerForm.zip,
+      country: registerForm.country,
+      nationality: registerForm.nationality,
+      gender: registerForm.gender
+    };
+
+    const config = {
+      method: 'post',
+      url: 'http://localhost:8888/users/sign-up'
+    };
+
+    if (data) {
+      config.data = data;
+    }
+
+    axios.request(config).then(function (response) {
+      console.log(response);
+      return successCallback();
+    }).catch(function (error) {
+      return errorCallback(error);
+    });
+  } // register
+
   logout(store, successCb) {
     storageService.clearAll();
     store.commit('setToken', null);

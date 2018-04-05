@@ -1,5 +1,8 @@
 <template>
   <div>
+    <q-toolbar slot="header" inverted>
+      Texas State Bank
+    </q-toolbar>
     <q-tabs>
       <q-tab slot="title" name="LOGIN" label="LOGIN" icon="login" @click="tabSelected('LOGIN')"></q-tab>
       <q-tab slot="title" name="REGISTER" label="REGISTER" icon="signup" @click="tabSelected('REGISTER')"></q-tab>
@@ -29,8 +32,15 @@
           </div>
         </div>
 
-        <div class="row" style="margin: 25px 0px 0px 325px; width: 350px;">
-          <div class="col-12">
+        <div class="row">
+          <div class="col-10 col-md-4">
+            <div>
+              <q-btn glossy rounded color="red-14" @click="tabSelected('REGISTER')">
+                Register
+              </q-btn>
+            </div>
+          </div>
+          <div class="col-10 col-md-2">
             <div>
               <q-btn glossy rounded color="red-14" @click="login">
                 Login
@@ -42,135 +52,163 @@
 
       <q-tab-pane name="REGISTER">
         <div>
-          <div class="row" style="margin: 25px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <span>Open an Account</span>
-            </div>
-          </div>
-
-          <div class="row" style="margin: 25px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="First Name" icon="account box">
-                <q-input v-model="form.firstName" autofocus clearable>
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-
-          <div class="row" style="margin: 25px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="Last Name" icon="account box">
-                <q-input v-model="form.lastName" autofocus clearable>
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="username" icon="security">
-                <q-input v-model="form.username">
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="Password" icon="security">
-                <q-input v-model="form.password" type="password">
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="ConfirmPassword" icon="security">
-                <q-input v-model="form.confirmPassword" type="password">
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="dob" icon="security">
-                <q-datetime v-model="form.dob" type="date">
-                </q-datetime>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="address1" icon="security">
-                <q-input v-model="form.address1">
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="address2" icon="security">
-                <q-input v-model="form.address2">
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="city" icon="security">
-                <q-input v-model="form.city">
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="state" icon="security">
-                <q-input v-model="form.state">
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="zip" icon="security">
-                <q-input v-model="form.zip">
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="country" icon="security">
-                <q-input v-model="form.country">
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="nationality" icon="security">
-                <q-input v-model="form.nationality">
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
-            <div class="col-12">
-              <q-field helper="gender" icon="security">
-                <q-input v-model="form.gender">
-                </q-input>
-              </q-field>
-            </div>
-          </div>
-          <div class="row" style="margin: 25px 0px 0px 325px; width: 350px;">
-            <div class="col-12">
-              <div>
-                <q-btn glossy rounded color="red-14" @click="register">
-                  Register
-                </q-btn>
+          <q-stepper ref="stepper" alternative-labels>
+            <q-step order="1" default title="Credentials">
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-12 col-md-4">
+                  <q-field helper="Username" icon="account circle">
+                    <q-input v-model="form.username">
+                    </q-input>
+                  </q-field>
+                </div>
               </div>
-            </div>
-          </div>
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-md-4">
+                  <q-field helper="Password" icon="vpn key">
+                    <q-input v-model="form.password" type="password">
+                    </q-input>
+                  </q-field>
+                </div>
+              </div>
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-md-4">
+                  <q-field helper="Confirm Password" icon="vpn key">
+                    <q-input v-model="form.confirmPassword" type="password">
+                    </q-input>
+                  </q-field>
+                </div>
+              </div>
+              <div class="row" style="margin: 25px 0px 0px 0px;">
+                <q-stepper-navigation>
+                  <q-btn color="primary" rounded @click="$refs.stepper.next()">Next</q-btn>
+                </q-stepper-navigation>
+              </div>
+            </q-step>
+            <q-step order="2" default title="User Details">
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-12 col-md-4">
+                  <q-field helper="First Name" icon="account box">
+                    <q-input v-model="form.firstName" autofocus clearable>
+                    </q-input>
+                  </q-field>
+                </div>
+                <div class="col-12 col-md-1">
+                </div>
+                <div class="col-12 col-md-4">
+                  <q-field helper="Last Name" icon="account box">
+                    <q-input v-model="form.lastName" autofocus clearable>
+                    </q-input>
+                  </q-field>
+                </div>
+
+                <div class="col-12 col-md">
+                </div>
+              </div>
+
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-12 col-md-4">
+                  <q-field helper="Date of Birth" icon="date range">
+                    <q-datetime v-model="form.dob" type="date">
+                    </q-datetime>
+                  </q-field>
+                </div>
+
+                <div class="col-12 col-md-1">
+                </div>
+
+                <div class="col-12 col-md-4">
+                  <q-field helper="Gender" icon="wc">
+                    <q-radio v-model="form.gender" val="M" label="Male"/>
+                    <q-radio v-model="form.gender" val="F" label="Female"/>
+                  </q-field>
+                </div>
+
+                <div class="col-12 col-md"></div>
+              </div>
+
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-12 col-md-4">
+                  <q-field helper="Nationality" icon="flag">
+                    <q-input v-model="form.nationality">
+                    </q-input>
+                  </q-field>
+                </div>
+
+                <div class="col-12 col-md-1">
+                </div>
+
+                <div class="col-12 col-md-4">
+                </div>
+
+                <div class="col-12 col-md"></div>
+              </div>
+
+              <q-stepper-navigation>
+                <q-btn color="secondary" rounded @click="$refs.stepper.previous()">Back</q-btn>
+                <q-btn color="primary" rounded @click="$refs.stepper.next()">Next</q-btn>
+              </q-stepper-navigation>
+            </q-step>
+
+            <q-step order="3" default title="User Address">
+
+              <div class="row" style="margin: 0px 0px 0px 50px;">
+                <div class="col-12 col-md-4">
+                  <q-field helper="Address 1" icon="home">
+                    <q-input v-model="form.address1">
+                    </q-input>
+                  </q-field>
+                </div>
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-4">
+                  <q-field helper="Address 2" icon="home">
+                    <q-input v-model="form.address2">
+                    </q-input>
+                  </q-field>
+                </div>
+
+              </div>
+
+              <div class="row" style="margin: 0px 0px 0px 50px;">
+                <div class="col-12 col-md-4">
+                  <q-field helper="City" icon="location city">
+                    <q-input v-model="form.city">
+                    </q-input>
+                  </q-field>
+                </div>
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-4">
+                  <q-field helper="State" icon="location city">
+                    <q-input v-model="form.state">
+                    </q-input>
+                  </q-field>
+                </div>
+              </div>
+              <div class="row" style="margin: 0px 0px 0px 50px;">
+                <div class="col-12 col-md-4">
+                  <q-field helper="Country" icon="flag">
+                    <q-input v-model="form.country">
+                    </q-input>
+                  </q-field>
+                </div>
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-4">
+                  <q-field helper="Zip" icon="fiber pin">
+                    <q-input v-model="form.zip">
+                    </q-input>
+                  </q-field>
+                </div>
+
+              </div>
+
+              <div class="row" style="margin: 0px 0px 0px 0px;">
+                <q-stepper-navigation>
+                  <q-btn color="secondary" rounded @click="$refs.stepper.previous()">Back</q-btn>
+                  <q-btn color="primary" rounded @click="register">Register</q-btn>
+                </q-stepper-navigation>
+              </div>
+            </q-step>
+
+          </q-stepper>
         </div>
       </q-tab-pane>
     </q-tabs>
@@ -192,6 +230,7 @@
         form: {
           firstName: null,
           lastName: null,
+          username: null,
           password: null,
           confirmPassword: null,
           dob: null,
@@ -225,24 +264,27 @@
         authService.login(that.loginForm.username, that.loginForm.password, that.$store, function () {
           that.$router.push({name: 'dashboard'});
         }, function (error) {
-          if (error.response && error.response.data && error.response.data.error_message) {
-            const errorMsg = error.response.data.error_message.toLowerCase();
-
-            if (errorMsg.indexOf('password expired') !== -1) {
-              alertService.error('Your password has expired. Please click forgot password link to reset your password.');
-            } else if (errorMsg.indexOf('failed login attempts') !== -1) {
-              alertService.error('Too many failed login attempts. Please click forgot password link to reset your password.');
-            } else {
-              alertService.error(error);
-            }
+          if (error.response && error.response.data && error.response.data.message) {
+            const errorMsg = error.response.data.message;
+            alertService.error(errorMsg);
           } else {
             alertService.error(error);
           }
         });
       },
-      register(){
+      register () {
+        const that = this;
+        authService.register(that.form, function () {
+          alertService.info('Registration was successful!! Please wait for approval')
+        }, function (error) {
+          if (error.response && error.response.data && error.response.data.message) {
+            const errorMsg = error.response.data.message;
+            alertService.error(errorMsg);
+          } else {
+            alertService.error(error);
+          }
+        });
       }
-
     } // methods
   }
 </script>
