@@ -26,7 +26,7 @@ export default new VueRouter({
 
   routes: [
     { path: '/', name: 'login_register', component: load('aa/LoginRegister') },
-    { path: '/dashboard', name: 'dashboard', component: load('Dashboard') },
+    { path: '/AccountSummary', name: 'account_summary', component: load('AccountSummary') },
 
     // Always leave this last one
     { path: '*', component: load('Error404') } // Not found

@@ -262,7 +262,7 @@
       login () {
         const that = this;
         authService.login(that.loginForm.username, that.loginForm.password, that.$store, function () {
-          that.$router.push({name: 'dashboard'});
+          that.$router.push({name: 'account_summary'});
         }, function (error) {
           if (error.response && error.response.data && error.response.data.message) {
             const errorMsg = error.response.data.message;
