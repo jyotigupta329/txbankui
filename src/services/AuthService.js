@@ -53,7 +53,9 @@ class AuthService {
       zip: registerForm.zip,
       country: registerForm.country,
       nationality: registerForm.nationality,
-      gender: registerForm.gender
+      gender: registerForm.gender,
+      phone: registerForm.phone,
+      email: registerForm.email
     };
 
     const config = {

@@ -136,11 +136,26 @@
 
                 <div class="col-12 col-md-1">
                 </div>
+                <div class="col-12 col-md-4">
+                  <q-field helper="Email" icon="email">
+                    <q-input v-model="form.email" type="email">
+                    </q-input>
+                  </q-field>
+                </div>
 
                 <div class="col-12 col-md-4">
                 </div>
 
                 <div class="col-12 col-md"></div>
+              </div>
+
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-12 col-md-4">
+                  <q-field helper="Phone" icon="phone">
+                    <q-input v-model="form.phone" type="phone">
+                    </q-input>
+                  </q-field>
+                </div>
               </div>
 
               <q-stepper-navigation>
@@ -241,7 +256,9 @@
           zip: null,
           country: null,
           nationality: null,
-          gender: null
+          gender: null,
+          phone: null,
+          email: null
         }
       }
     }, // data
