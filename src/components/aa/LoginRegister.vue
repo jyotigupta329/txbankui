@@ -1,9 +1,6 @@
 <template>
   <div>
-    <q-toolbar slot="header" inverted>
-      Texas State Bank
-    </q-toolbar>
-    <q-tabs>
+    <q-tabs v-model="selectedTab">
       <q-tab slot="title" name="LOGIN" label="LOGIN" icon="login" @click="tabSelected('LOGIN')"></q-tab>
       <q-tab slot="title" name="REGISTER" label="REGISTER" icon="signup" @click="tabSelected('REGISTER')"></q-tab>
 
@@ -31,18 +28,23 @@
             </q-field>
           </div>
         </div>
+        <div class="row" style="margin: 25px 0px 0px 50px; width: 350px;"></div>
 
-        <div class="row">
-          <div class="col-10 col-md-4">
+        <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
+          <div class="col-10 col-md-8">
             <div>
-              <q-btn glossy rounded color="red-14" @click="tabSelected('REGISTER')">
+              <q-btn rounded color="primary" @click="tabSelected('REGISTER')">
                 Register
               </q-btn>
             </div>
           </div>
-          <div class="col-10 col-md-2">
+          <div class="col-10 col-md-1">
+          </div>
+          <div class="col-10 col-md-1">
+          </div>
+          <div class="col-10 col-md-1">
             <div>
-              <q-btn glossy rounded color="red-14" @click="login">
+              <q-btn rounded color="primary" @click="login">
                 Login
               </q-btn>
             </div>
@@ -236,6 +238,7 @@
   export default {
     data () {
       return {
+        selectedTab: 'LOGIN',
         refreshLogin: true,
         refreshRegister: true,
         loginForm: {
@@ -267,13 +270,14 @@
     },
 
     methods: {
-      tabSelected(tabName) {
+      tabSelected (tabName) {
         alertService.clear();
 
         if (tabName === 'LOGIN') {
           this.refreshLogin = !this.refreshLogin;
         } else if (tabName === 'REGISTER') {
           this.refreshRegister = !this.refreshRegister;
+          this.selectedTab = tabName;
         }
       }, // tabSelected
       login () {
