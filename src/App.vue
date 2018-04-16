@@ -1,7 +1,11 @@
 <template>
   <div id="q-app">
-    <q-layout ref="layout" view="hHh LpR lFf">
+    <q-layout ref="layout" view="hHh LpR lFf" :header-class="headerClass" :footer-class="footerClass"
+              :footer-style="footerStyle">
       <q-toolbar slot="header" inverted>
+        <q-btn flat @click="$refs.layout.toggleLeft()" v-if="authenticated" color="primary">
+          <q-icon name="menu"/>
+        </q-btn>
         <img src="~assets/logo.png" class="responsive">
         <q-toolbar-title>
           Texas State Bank
@@ -71,11 +75,11 @@
 
       <router-view/>
       <!-- Footer -->
-      <q-toolbar slot="footer" inverted>
-        <q-toolbar-title>
-          <span slot="subtitle">Texas State Bank. All Rights Reserved.</span>
-        </q-toolbar-title>
-      </q-toolbar>
+      <div slot="footer">
+        <div class="row justify-center" style="margin: 0px 10px 0px 10px;">
+          <small>Texas State Bank &copy; 2018. All Rights Reserved</small>
+        </div>
+      </div>
     </q-layout>
   </div>
 
@@ -84,8 +88,9 @@
 <script>
   import {authService} from '@services/AuthService'
   import {alertService} from '@services/AlertService';
+
   export default {
-    data () {
+    data() {
       return {
         form: {
           username: null,
@@ -94,11 +99,21 @@
       }
     }, // data
 
-    mounted () {
+    mounted() {
     },
 
     computed: {
-      authenticated(){
+      headerClass() {
+        return { 'bg-white': true, 'text-white': true };
+      },
+      footerClass() {
+        return { 'bg-white': true, 'text-white': false, 'text-secondary': true };
+      },
+
+      footerStyle() {
+        return { height: '18px' };
+      },
+      authenticated() {
         return authService.isAuthenticated(this.$store);
       }
     },
@@ -107,9 +122,12 @@
       logout() {
         const that = this;
         authService.logout(this.$store, function () {
-          that.$router.push({name: 'login_register'});
+          that.$router.push({ name: 'login_register' });
         });
       }, // logout
+      menuClicked() {
+        alertService.clear();
+      }
     } // methods
   }
 </script>

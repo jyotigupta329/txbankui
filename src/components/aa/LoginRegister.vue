@@ -23,7 +23,7 @@
         <div class="row" style="margin: 0px 0px 0px 50px; width: 350px;">
           <div class="col-12">
             <q-field helper="Password" icon="security">
-              <q-input v-model="loginForm.password" type="password">
+              <q-input v-model="loginForm.password" type="password" @keyup.enter="login">
               </q-input>
             </q-field>
           </div>

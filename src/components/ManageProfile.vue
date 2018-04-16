@@ -1,77 +1,87 @@
 <template>
   <div>
-    <q-tabs>
-      <q-tab slot="title" name="UPDATE PROFILE" label="UPDATE PROFILE" icon="update"
-             @click="tabSelected('UPDATE PROFILE')"></q-tab>
+    <q-tabs v-model="selectedTab" inverted style="margin: 10px 0px 0px 0px;">
+      <q-tab slot="title" name="UPDATE_PROFILE" label="UPDATE PROFILE" icon="update"
+             @click="tabSelected('UPDATE_PROFILE')"></q-tab>
       <q-tab slot="title" name="SECURITY" label="SECURITY" icon="security" @click="tabSelected('SECURITY')"></q-tab>
 
-      <q-tab-pane name="UPDATE PROFILE">
-
-        <div class="col-12 col-md-4">
-          <q-field helper="Nationality" icon="flag">
-            <q-input v-model="form.nationality">
-            </q-input>
-          </q-field>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <q-field helper="Email" icon="email">
-            <q-input v-model="form.email" type="email">
-            </q-input>
-          </q-field>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <q-field helper="Phone" icon="phone">
-            <q-input v-model="form.phone">
-            </q-input>
-          </q-field>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <q-field helper="Address 1" icon="home">
-            <q-input v-model="form.address1">
-            </q-input>
-          </q-field>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <q-field helper="Address 2" icon="home">
-            <q-input v-model="form.address2">
-            </q-input>
-          </q-field>
-        </div>
-
-
-        <div class="col-12 col-md-4">
-          <q-field helper="City" icon="location city">
-            <q-input v-model="form.city">
-            </q-input>
-          </q-field>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <q-field helper="State" icon="location city">
-            <q-input v-model="form.state">
-            </q-input>
-          </q-field>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <q-field helper="Zip" icon="fiber pin">
-            <q-input v-model="form.zip">
-            </q-input>
-          </q-field>
-        </div>
-
-        <div class="row">
-          <div class="col-10 col-md-4">
-            <div>
-              <q-btn glossy rounded color="red-14" @click="update">
-                Submit
-              </q-btn>
-            </div>
+      <q-tab-pane name="UPDATE_PROFILE">
+        <div class="row" style="margin: 0px 0px 0px 10px;">
+          <div class="col-12 col-md-4">
+            <q-field helper="Email" icon="email">
+              <q-input v-model="form.email" type="email">
+              </q-input>
+            </q-field>
           </div>
+          <div class="col-12 col-md-1">
+          </div>
+          <div class="col-12 col-md-4">
+            <q-field helper="Phone" icon="phone">
+              <q-input v-model="form.phone">
+              </q-input>
+            </q-field>
+          </div>
+        </div>
+
+
+        <div class="row" style="margin: 0px 0px 0px 10px;">
+          <div class="col-12 col-md-4">
+            <q-field helper="Address 1" icon="home">
+              <q-input v-model="form.address1">
+              </q-input>
+            </q-field>
+          </div>
+          <div class="col-12 col-md-1">
+          </div>
+          <div class="col-12 col-md-4">
+            <q-field helper="Address 2" icon="home">
+              <q-input v-model="form.address2">
+              </q-input>
+            </q-field>
+          </div>
+        </div>
+        <div class="row" style="margin: 0px 0px 0px 10px;">
+          <div class="col-12 col-md-4">
+            <q-field helper="City" icon="location city">
+              <q-input v-model="form.city">
+              </q-input>
+            </q-field>
+          </div>
+          <div class="col-12 col-md-1">
+          </div>
+          <div class="col-12 col-md-4">
+            <q-field helper="State" icon="location city">
+              <q-input v-model="form.state">
+              </q-input>
+            </q-field>
+          </div>
+        </div>
+        <div class="row" style="margin: 0px 0px 0px 10px;">
+          <div class="col-12 col-md-4">
+            <q-field helper="Zip" icon="fiber pin">
+              <q-input v-model="form.zip">
+              </q-input>
+            </q-field>
+          </div>
+          <div class="col-12 col-md-1">
+          </div>
+          <div class="col-12 col-md-4">
+            <q-field helper="Nationality" icon="flag">
+              <q-input v-model="form.nationality">
+              </q-input>
+            </q-field>
+          </div>
+        </div>
+        <div class="row" style="margin: 10px;">
+        </div>
+        <div class="row" style="margin: 0px 0px 0px 10px;">
+          <div class="col-12 col-md-4"/>
+          <div class="col-10 col-md-4">
+            <q-btn rounded color="primary" @click="update">
+              Submit
+            </q-btn>
+          </div>
+          <div class="col-12 col-md-4"/>
         </div>
       </q-tab-pane>
 
@@ -102,9 +112,11 @@
 <script>
   import {alertService} from '@services/AlertService';
   import {manageProfileService} from '@services/ManageProfileService';
+
   export default {
-    data () {
+    data() {
       return {
+        selectedTab: 'UPDATE_PROFILE',
         refreshLogin: true,
         refreshRegister: true,
         loginForm: {
@@ -126,7 +138,7 @@
       }
     }, // data
 
-    mounted () {
+    mounted() {
       this.manageProfile();
     },
 
@@ -141,7 +153,7 @@
         }
       }, // tabSelected
 
-      manageProfile () {
+      manageProfile() {
         const that = this;
         manageProfileService.getUserProfile(function (data) {
           that.form.address1 = data.accountName;
@@ -164,7 +176,7 @@
         });
       },
 
-      update () {
+      update() {
         const that = this;
         manageProfileService.update(that.form, function () {
           alertService.info('Your profile has been successfully updated');
