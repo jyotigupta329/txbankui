@@ -42,36 +42,33 @@
         <q-list no-border @click="menuClicked()">
 
 
-          <q-side-link item to="AccountSummary">
+          <q-side-link item to="AccountSummary" v-if="$hasRole('ROLE_USER')">
             <q-item-side icon="account balance"/>
             <q-item-main label="Account Summary"/>
           </q-side-link>
 
-          <q-side-link item to="TransferPay" exact>
+          <q-side-link item to="TransferPay" exact v-if="$hasRole('ROLE_USER')">
             <q-item-side icon="payment"/>
             <q-item-main label="Transfer & Pay"/>
           </q-side-link>
 
-          <q-collapsible icon="lock" label="Statement & Document">
+          <q-side-link item to="StatementDocument" exact v-if="$hasRole('ROLE_USER')">
+            <q-item-side icon="pageview"/>
+            <q-item-main label="View Statement & Document"/>
+          </q-side-link>
 
-            <q-side-link item to="StatementDocument">
-              <q-item-side icon="pageview"/>
-              <q-item-main label="View Statement & Document"/>
-            </q-side-link>
-          </q-collapsible>
-
-          <q-side-link item to="ManageProfile">
+          <q-side-link item to="ManageProfile" v-if="$hasRole('ROLE_USER')">
             <q-item-side icon="account circle"/>
             <q-item-main label="Manage Your Profile"/>
           </q-side-link>
 
-          <q-side-link item to="ManageAlerts">
+          <q-side-link item to="ManageAlerts" v-if="$hasRole('ROLE_USER')">
             <q-item-side icon="notifications"/>
             <q-item-main label="Manage Alerts"/>
           </q-side-link>
 
-          <q-side-link item to="AdminDashboard">
-            <q-item-side icon="notifications"/>
+          <q-side-link item to="AdminDashboard" v-if="$hasRole('ROLE_ADMIN')">
+            <q-item-side icon="lock"/>
             <q-item-main label="Admin Dashboard"/>
           </q-side-link>
 

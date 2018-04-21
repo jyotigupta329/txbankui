@@ -28,10 +28,14 @@ class AuthService {
 
     axios.request(config).then(function (response) {
       storageService.set('token', response.headers.authorization);
-      let user = jwtDecode(response.headers.authorization).sub;
+      let claimSet = jwtDecode(response.headers.authorization);
+      let user = claimSet.sub;
+      let role = claimSet.role;
       storageService.set('user', user);
+      storageService.set('role', role);
       store.commit('setToken', response.headers.authorization);
       store.commit('setUser', user);
+      store.commit('setRole', role);
       return successCallback();
     }).catch(function (error) {
       return errorCallback(error);

@@ -154,7 +154,7 @@
               <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-12 col-md-4">
                   <q-field helper="Phone" icon="phone">
-                    <q-input v-model="form.phone" type="phone">
+                    <q-input v-model="form.phone">
                     </q-input>
                   </q-field>
                 </div>
