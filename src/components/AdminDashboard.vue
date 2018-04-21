@@ -17,7 +17,7 @@
       <q-modal-layout>
         <q-toolbar slot="header">
           <q-toolbar-title>
-            <p>{{form.username}}</p>
+            <p>Username :   {{form.username}}</p>
           </q-toolbar-title>
 
           <q-btn flat @click="closeUsersModal()">
@@ -29,10 +29,10 @@
           <div>
             <q-step order="1" default title="Credentials">
 
-              <div class="row">
+              <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-12 col-md-5">
                   <q-field helper="First Name">
-                    <p>{{form.firstName}}</p>
+                    <q-input v-model="form.firstName" readonly />
                   </q-field>
                 </div>
 
@@ -41,7 +41,7 @@
 
                 <div class="col-12 col-md-5">
                   <q-field helper="Last Name">
-                    <p>{{form.lastName}}</p>
+                    <q-input v-model="form.lastName" readonly/>
                   </q-field>
                 </div>
               </div>
@@ -50,7 +50,7 @@
               <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-12 col-md-5">
                   <q-field helper="Email">
-                    <q-input v-model="form.email"/>
+                    <q-input v-model="form.email" readonly/>
                   </q-field>
                 </div>
 
@@ -59,12 +59,12 @@
 
                 <div class="col-12 col-md-5">
                   <q-field helper="Phone">
-                    <q-input v-model="form.phone"/>
+                    <q-input v-model="form.phone" readonly/>
                   </q-field>
                 </div>
               </div>
 
-              <div class="row" style="margin: 25px 0px 0px 0px;">
+              <div class="row" style="margin: 40px 0px 0px 0px;">
                 <q-stepper-navigation>
                   <q-btn color="primary" rounded @click="$refs.stepper.next()">Next</q-btn>
                 </q-stepper-navigation>
@@ -75,7 +75,7 @@
               <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-12 col-md-5">
                   <q-field helper="Address 1">
-                    <q-input v-model="form.address1"/>
+                    <q-input v-model="form.address1" readonly/>
                   </q-field>
                 </div>
 
@@ -84,7 +84,7 @@
 
                 <div class="col-12 col-md-5">
                   <q-field helper="Address 2">
-                    <q-input v-model="form.address2"/>
+                    <q-input v-model="form.address2" readonly/>
                   </q-field>
                 </div>
               </div>
@@ -92,7 +92,7 @@
               <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-12 col-md-5">
                   <q-field helper="City">
-                    <q-input v-model="form.city"/>
+                    <q-input v-model="form.city" readonly/>
                   </q-field>
                 </div>
 
@@ -101,7 +101,7 @@
 
                 <div class="col-12 col-md-5">
                   <q-field helper="State">
-                    <q-input v-model="form.state"/>
+                    <q-input v-model="form.state" readonly/>
                   </q-field>
                 </div>
               </div>
@@ -109,17 +109,23 @@
               <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-12 col-md-5">
                   <q-field helper="State">
-                    <q-input v-model="form.nationality"/>
+                    <q-input v-model="form.nationality" readonly/>
                   </q-field>
                 </div>
               </div>
 
-              <div class="row" style="margin: 20px 0px 0px 0px;">
+              <div class="row" style="margin: 0px 0px 0px 0px;">
                 <q-stepper-navigation>
-                  <q-btn color="primary" rounded @click="$refs.stepper.previous()">Back</q-btn>
-                  <div class="col-12 col-md-16">
+                  <div class="col-12 col-md-5">
+                    <q-btn color="primary" rounded @click="$refs.stepper.previous()">Back</q-btn>
                   </div>
-                  <q-btn color="primary" rounded @click="$refs.stepper.next()">Next</q-btn>
+                  <div class="col-12 col-md-14">
+                  </div>
+                  <div class="col-12 col-md-14">
+                  </div>
+                  <div class="col-12 col-md-5">
+                    <q-btn color="primary" rounded @click="$refs.stepper.next()">Next</q-btn>
+                  </div>
                 </q-stepper-navigation>
               </div>
             </q-step>
@@ -129,7 +135,7 @@
               <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-12 col-md-5">
                   <q-field helper="Id Type 1">
-                    <q-input v-model="form.idtype1"/>
+                    <q-input v-model="form.idtype1" readonly/>
                   </q-field>
                 </div>
 
@@ -138,7 +144,7 @@
 
                 <div class="col-12 col-md-5">
                   <q-field helper="Id No 1">
-                    <q-input v-model="form.idno1"/>
+                    <q-input v-model="form.idno1" readonly/>
                   </q-field>
                 </div>
               </div>
@@ -146,7 +152,7 @@
               <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-12 col-md-5">
                   <q-field helper="Id Type 2 ">
-                    <q-input v-model="form.idtype1"/>
+                    <q-input v-model="form.idtype1" readonly/>
                   </q-field>
                 </div>
 
@@ -155,19 +161,23 @@
 
                 <div class="col-12 col-md-5">
                   <q-field helper="Id No 2 ">
-                    <q-input v-model="form.idno2"/>
+                    <q-input v-model="form.idno2" readonly/>
                   </q-field>
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row" style="margin: 40px 0px 0px 10px;">
                 <q-stepper-navigation>
-                  <q-btn color="primary" rounded @click="$refs.stepper.previous()">Back</q-btn>
-                  <div class="col-12 col-md-14">
+                  <div class="col-12 col-md-5">
+                    <q-btn color="primary" rounded @click="$refs.stepper.previous()">Back</q-btn>
                   </div>
                   <div class="col-12 col-md-14">
                   </div>
-                  <q-btn color="primary" rounded @click="$refs.stepper.next()">Approve</q-btn>
+                  <div class="col-12 col-md-14">
+                  </div>
+                  <div class="col-12 col-md-5">
+                    <q-btn color="primary" rounded @click="$refs.stepper.next()">Approve</q-btn>
+                  </div>
                 </q-stepper-navigation>
               </div>
             </q-step>
