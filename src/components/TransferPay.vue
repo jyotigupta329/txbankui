@@ -1,53 +1,56 @@
 <template>
   <div>
-    <div style="width: 500px; padding: 25px">
-      <span>
-        From
-      </span>
-    </div>
-    <div style="width: 500px; padding: 25px">
-      <q-select
-        v-model="from"
-        :options="selectOptions"
-      />
-    </div>
-    <div></div>
-    <div style="width: 500px; padding: 25px">
-      <span>
-        To
-      </span>
-    </div>
-    <div style="width: 500px; padding: 25px">
-      <q-select
-        v-model="to"
-        :options="selectOptions"
-      />
-    </div>
-    <div style="width: 500px; padding: 25px">
-      <span>
-        Amount
-      </span>
-      <q-input v-model="amount"/>
-    </div>
-    <div class="row" style="margin: 0px 0px 0px 10px;">
-      <div class="col-12 col-md-4"/>
-      <div class="col-10 col-md-4">
-        <q-btn rounded color="primary" @click="">
+    <q-card>
+      <q-card-title>
+        Transfer Money
+      </q-card-title>
+      <div class="row" style="margin: 25px">
+        <div class="col-12 col-md-3">
+          <q-field icon="account_balance" helper="From">
+            <q-select v-model="from" :options="fromSelect">
+            </q-select>
+          </q-field>
+        </div>
+
+        <div class="col-12 col-md">
+        </div>
+
+        <div class="col-12 col-md-3">
+          <q-field icon="account_balance" helper="To">
+            <q-select v-model="to" :options="selectOptions">
+            </q-select>
+          </q-field>
+        </div>
+
+        <div class="col-12 col-md">
+        </div>
+        <div class="col-12 col-md-3">
+          <q-field icon="attach money" helper="Amount">
+            <q-input v-model="amount"></q-input>
+          </q-field>
+        </div>
+      </div>
+      <q-card-separator/>
+      <q-card-actions>
+        <q-btn class="on-right" rounded color="primary" @click="">
           Submit
         </q-btn>
-      </div>
-      <div class="col-12 col-md-4"/>
-    </div>
+      </q-card-actions>
+    </q-card>
+
   </div>
+
 </template>
 
 <script>
   export default {
-    data () {
+    data() {
       return {
         from: null,
         to: null,
         amount: null,
+        fromSelect: [],
+        toSelect: [],
         selectOptions: [
           {
             label: 'Saving',

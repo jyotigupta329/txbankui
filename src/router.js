@@ -28,7 +28,9 @@ export default new VueRouter({
     { path: '/', name: 'login_register', component: load('aa/LoginRegister') },
     { path: '/AccountSummary', name: 'account_summary', component: load('AccountSummary') },
     { path: '/ManageProfile', name: 'manage_profile', component: load('ManageProfile') },
+    { path: '/StatementDocument', name: 'statement_document', component: load('StatementDocument') },
     { path: '/TransferPay', name: 'transfer_pay', component: load('TransferPay') },
+    { path: '/ManageAlerts', name: 'manage_alerts', component: load('ManageAlerts') },
     { path: '/AdminDashboard', name: 'admin_dashboard', component: load('AdminDashboard') },
     // Always leave this last one
     { path: '*', component: load('Error404') } // Not found

@@ -181,7 +181,7 @@
                     </q-btn>
                     <q-btn color="primary" rounded v-if="form.accountStatus === 'Pending'"
                            @click="activate(form.username)">
-                      Deactivate
+                      Activate
                     </q-btn>
                   </div>
                 </q-stepper-navigation>
@@ -297,6 +297,7 @@
         adminDashboardService.activateAccount(username, function (data) {
           alertService.info('Account activated');
           that.closeUsersModal();
+          that.usersProfile();
         }, function (error) {
           if (error.response && error.response.data && error.response.data.message) {
             const errorMsg = error.response.data.message;
@@ -309,8 +310,9 @@
       deActivate(username) {
         const that = this;
         adminDashboardService.suspendAccount(username, function (data) {
-          alertService.info('Account activated');
+          alertService.info('Account deactivated');
           that.closeUsersModal();
+          that.usersProfile();
         }, function (error) {
           if (error.response && error.response.data && error.response.data.message) {
             const errorMsg = error.response.data.message;
