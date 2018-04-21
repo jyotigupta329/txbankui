@@ -13,70 +13,166 @@
 
     </q-data-table>
 
-    <q-modal ref="usersModalRef" :content-css="{minWidth: '80vw', minHeight: '80vh'}">
+    <q-modal ref="usersModalRef" :content-css="{minWidth: '40vw', minHeight: '70vh'}">
       <q-modal-layout>
         <q-toolbar slot="header">
           <q-toolbar-title>
-            User Details
+            <p>{{form.username}}</p>
           </q-toolbar-title>
 
           <q-btn flat @click="closeUsersModal()">
             <q-icon name="close"/>
           </q-btn>
         </q-toolbar>
+        <q-stepper ref="stepper" alternative-labels>
 
-        <div class="layout-padding">
-          <div class="row" style="margin: 5px 0px 0px 10px;">
-            <div class="col-12 col-md-4">
-              <q-field helper="Username">
-                <q-input v-model="form.username"/>
-              </q-field>
-            </div>
+          <div>
+            <q-step order="1" default title="Credentials">
 
-            <div class="col-12 col-md-8">
-            </div>
+              <div class="row">
+                <div class="col-12 col-md-5">
+                  <q-field helper="First Name">
+                    <p>{{form.firstName}}</p>
+                  </q-field>
+                </div>
 
-            <div class="col-12 col-md-4">
-              <q-field helper="First Name">
-                <q-input v-model="form.firstName"/>
-              </q-field>
-            </div>
+                <div class="col-12 col-md-2">
+                </div>
 
-            <div class="col-12 col-md-8">
-            </div>
-
-            <div class="col-12 col-md-4">
-              <q-field helper="Last Name">
-                <q-input v-model="form.lastName"/>
-              </q-field>
-            </div>
-
-            <div class="col-12 col-md-1">
-            </div>
-
-            <div class="col-12 col-md-4">
-              <q-field helper="Email">
-                <q-input v-model="form.email"/>
-              </q-field>
-            </div>
-
-            <div class="col-12 col-md">
-              <q-field helper="Address 1">
-                <q-input v-model="form.address1"/>
-              </q-field>
-            </div>
+                <div class="col-12 col-md-5">
+                  <q-field helper="Last Name">
+                    <p>{{form.lastName}}</p>
+                  </q-field>
+                </div>
+              </div>
 
 
-            <div class="col-12 col-md-1">
-            </div>
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-12 col-md-5">
+                  <q-field helper="Email">
+                    <q-input v-model="form.email"/>
+                  </q-field>
+                </div>
+
+                <div class="col-12 col-md-2">
+                </div>
+
+                <div class="col-12 col-md-5">
+                  <q-field helper="Phone">
+                    <q-input v-model="form.phone"/>
+                  </q-field>
+                </div>
+              </div>
+
+              <div class="row" style="margin: 25px 0px 0px 0px;">
+                <q-stepper-navigation>
+                  <q-btn color="primary" rounded @click="$refs.stepper.next()">Next</q-btn>
+                </q-stepper-navigation>
+              </div>
+            </q-step>
+
+            <q-step order="2" default title="Address">
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-12 col-md-5">
+                  <q-field helper="Address 1">
+                    <q-input v-model="form.address1"/>
+                  </q-field>
+                </div>
+
+                <div class="col-12 col-md-2">
+                </div>
+
+                <div class="col-12 col-md-5">
+                  <q-field helper="Address 2">
+                    <q-input v-model="form.address2"/>
+                  </q-field>
+                </div>
+              </div>
+
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-12 col-md-5">
+                  <q-field helper="City">
+                    <q-input v-model="form.city"/>
+                  </q-field>
+                </div>
+
+                <div class="col-12 col-md-2">
+                </div>
+
+                <div class="col-12 col-md-5">
+                  <q-field helper="State">
+                    <q-input v-model="form.state"/>
+                  </q-field>
+                </div>
+              </div>
+
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-12 col-md-5">
+                  <q-field helper="State">
+                    <q-input v-model="form.nationality"/>
+                  </q-field>
+                </div>
+              </div>
+
+              <div class="row" style="margin: 20px 0px 0px 0px;">
+                <q-stepper-navigation>
+                  <q-btn color="primary" rounded @click="$refs.stepper.previous()">Back</q-btn>
+                  <div class="col-12 col-md-16">
+                  </div>
+                  <q-btn color="primary" rounded @click="$refs.stepper.next()">Next</q-btn>
+                </q-stepper-navigation>
+              </div>
+            </q-step>
+
+
+            <q-step order="3" default title="Identity">
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-12 col-md-5">
+                  <q-field helper="Id Type 1">
+                    <q-input v-model="form.idtype1"/>
+                  </q-field>
+                </div>
+
+                <div class="col-12 col-md-2">
+                </div>
+
+                <div class="col-12 col-md-5">
+                  <q-field helper="Id No 1">
+                    <q-input v-model="form.idno1"/>
+                  </q-field>
+                </div>
+              </div>
+
+              <div class="row" style="margin: 0px 0px 0px 10px;">
+                <div class="col-12 col-md-5">
+                  <q-field helper="Id Type 2 ">
+                    <q-input v-model="form.idtype1"/>
+                  </q-field>
+                </div>
+
+                <div class="col-12 col-md-2">
+                </div>
+
+                <div class="col-12 col-md-5">
+                  <q-field helper="Id No 2 ">
+                    <q-input v-model="form.idno2"/>
+                  </q-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <q-stepper-navigation>
+                  <q-btn color="primary" rounded @click="$refs.stepper.previous()">Back</q-btn>
+                  <div class="col-12 col-md-14">
+                  </div>
+                  <div class="col-12 col-md-14">
+                  </div>
+                  <q-btn color="primary" rounded @click="$refs.stepper.next()">Approve</q-btn>
+                </q-stepper-navigation>
+              </div>
+            </q-step>
           </div>
-
-          <div class="row" style="margin: 25px 0px 0px 0px;">
-            <div class="col-12 col-md-8">
-            </div>
-
-          </div>
-        </div>
+        </q-stepper>
       </q-modal-layout>
     </q-modal>
 
@@ -92,10 +188,10 @@
       return {
         users: [],
         form: {
-          username: '',
-          firstName: '',
-          lastName: '',
-          email: '',
+          username: null,
+          firstName: null,
+          lastName: null,
+          email: null,
           address1: null,
           address2: null,
           city: null,
@@ -103,6 +199,10 @@
           zip: null,
           nationality: null,
           phone: null,
+          idtype1: null,
+          idtype2: null,
+          idno1: null,
+          idno2: null
         },
         config: {
           rowHeight: '50px',
