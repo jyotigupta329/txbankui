@@ -52,12 +52,6 @@
             <q-item-main label="Transfer & Pay"/>
           </q-side-link>
 
-
-          <q-side-link item to="ManageAlerts">
-            <q-item-side icon="notifications"/>
-            <q-item-main label="Manage Alerts"/>
-          </q-side-link>
-
           <q-collapsible icon="lock" label="Statement & Document">
 
             <q-side-link item to="StatementDocument">
@@ -70,6 +64,17 @@
             <q-item-side icon="account circle"/>
             <q-item-main label="Manage Your Profile"/>
           </q-side-link>
+
+          <q-side-link item to="ManageAlerts">
+            <q-item-side icon="notifications"/>
+            <q-item-main label="Manage Alerts"/>
+          </q-side-link>
+
+          <q-side-link item to="AdminDashboard">
+            <q-item-side icon="notifications"/>
+            <q-item-main label="Admin Dashboard"/>
+          </q-side-link>
+
         </q-list>
       </div>
 

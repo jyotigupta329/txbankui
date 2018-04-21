@@ -216,6 +216,51 @@
                 </div>
 
               </div>
+              <q-stepper-navigation>
+                <q-btn color="secondary" rounded @click="$refs.stepper.previous()">Back</q-btn>
+                <q-btn color="primary" rounded @click="$refs.stepper.next()">Next</q-btn>
+              </q-stepper-navigation>
+
+            </q-step>
+
+            <q-step order="3" default title="Document Details">
+
+              <div class="row" style="margin: 0px 0px 0px 50px;">
+                <div class="col-12 col-md-4">
+                  <q-field helper="Identity" icon="perm identity">
+                    <q-select
+                      v-model="form.idtype1"
+                      :options="selectOptions">
+                    </q-select>
+                  </q-field>
+                </div>
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-4">
+                  <q-field helper="Id Number" icon="home">
+                    <q-input v-model="form.idno1">
+                    </q-input>
+                  </q-field>
+                </div>
+
+              </div>
+
+              <div class="row" style="margin: 0px 0px 0px 50px;">
+                <div class="col-12 col-md-4">
+                  <q-field helper="Identity" icon="perm identity">
+                    <q-select
+                      v-model="form.idtype2"
+                      :options="selectOptions">
+                    </q-select>
+                  </q-field>
+                </div>
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-4">
+                  <q-field helper="Id Number" icon="perm identity">
+                    <q-input v-model="form.idno2">
+                    </q-input>
+                  </q-field>
+                </div>
+              </div>
 
               <div class="row" style="margin: 0px 0px 0px 0px;">
                 <q-stepper-navigation>
@@ -225,7 +270,10 @@
               </div>
             </q-step>
 
+
           </q-stepper>
+
+
         </div>
       </q-tab-pane>
     </q-tabs>
@@ -261,8 +309,26 @@
           nationality: null,
           gender: null,
           phone: null,
-          email: null
-        }
+          email: null,
+          idtype1: null,
+          idtype2: null,
+          idno1: null,
+          idno2: null,
+        },
+        selectOptions: [
+          {
+            label: 'SSN',
+            value: 'SSN'
+          },
+          {
+            label: 'Drivers Licence',
+            value: 'DriversLicence'
+          },
+          {
+            label: 'Passport',
+            value: 'Passport'
+          }
+        ]
       }
     }, // data
 

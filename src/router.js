@@ -28,6 +28,8 @@ export default new VueRouter({
     { path: '/', name: 'login_register', component: load('aa/LoginRegister') },
     { path: '/AccountSummary', name: 'account_summary', component: load('AccountSummary') },
     { path: '/ManageProfile', name: 'manage_profile', component: load('ManageProfile') },
+    { path: '/TransferPay', name: 'transfer_pay', component: load('TransferPay') },
+    { path: '/AdminDashboard', name: 'admin_dashboard', component: load('AdminDashboard') },
     // Always leave this last one
     { path: '*', component: load('Error404') } // Not found
   ]

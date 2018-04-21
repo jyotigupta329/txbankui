@@ -12,6 +12,7 @@ require('./themes/app.' + __THEME + '.styl');
 
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Vuelidate from 'vuelidate';
 import Quasar, {
   BackToTop,
   Ripple,
@@ -77,6 +78,7 @@ import AuthPlugin from '@plugin/AuthPlugin';
 Vue.config.productionTip = false
 Vue.use(Vuex);
 Vue.use(AuthPlugin);
+Vue.use(Vuelidate);
 Vue.use(Quasar, {
   components: {
     QLayout,

@@ -8,8 +8,8 @@
       <q-tab-pane name="UPDATE_PROFILE">
         <div class="row" style="margin: 0px 0px 0px 10px;">
           <div class="col-12 col-md-4">
-            <q-field helper="Email" icon="email">
-              <q-input v-model="form.email" type="email">
+            <q-field helper="Email" icon="email" :error="$v.form.email.$error" :error-label="`Email is required`">
+              <q-input v-model="form.email" type="email" @blur="$v.form.email.$touch">
               </q-input>
             </q-field>
           </div>
@@ -77,7 +77,7 @@
         <div class="row" style="margin: 0px 0px 0px 10px;">
           <div class="col-12 col-md-4"/>
           <div class="col-10 col-md-4">
-            <q-btn rounded color="primary" @click="update">
+            <q-btn rounded color="primary" @click="update" :disabled="$v.form.$invalid">
               Submit
             </q-btn>
           </div>
@@ -103,6 +103,15 @@
               </q-field>
             </div>
           </div>
+          <div class="row" style="margin: 0px 0px 0px 10px;">
+            <div class="col-12 col-md-4"/>
+            <div class="col-10 col-md-4">
+              <q-btn rounded color="primary" @click="updatePassword">
+                Submit
+              </q-btn>
+            </div>
+            <div class="col-12 col-md-4"/>
+          </div>
         </div>
       </q-tab-pane>
     </q-tabs>
@@ -112,6 +121,7 @@
 <script>
   import {alertService} from '@services/AlertService';
   import {manageProfileService} from '@services/ManageProfileService';
+  import {required} from 'vuelidate/lib/validators'
 
   export default {
     data() {
@@ -137,6 +147,13 @@
         }
       }
     }, // data
+    validations: {
+      form: {
+        email: {
+          required
+        }
+      }
+    },
 
     mounted() {
       this.manageProfile();
@@ -156,7 +173,6 @@
       manageProfile() {
         const that = this;
         manageProfileService.getUserProfile(function (data) {
-          that.form.address1 = data.accountName;
           that.form.address1 = data.address1;
           that.form.address2 = data.address2;
           that.form.city = data.city;
@@ -165,6 +181,7 @@
           that.form.nationality = data.nationality;
           that.form.phone = data.phone;
           that.form.email = data.email;
+          that.form.password = data.password;
 
         }, function (error) {
           if (error.response && error.response.data && error.response.data.message) {
@@ -178,6 +195,7 @@
 
       update() {
         const that = this;
+        alertService.clear();
         manageProfileService.update(that.form, function () {
           alertService.info('Your profile has been successfully updated');
         }, function (error) {
@@ -190,6 +208,19 @@
         });
       },
 
+      updatePassword () {
+        const that = this;
+        manageProfileService.updatePassword(that.form, function () {
+          alertService.info('Your password has been successfully updated');
+        }, function (error) {
+          if (error.response && error.response.data && error.response.data.message) {
+            const errorMsg = error.response.data.message;
+            alertService.error(errorMsg);
+          } else {
+            alertService.error(error);
+          }
+        });
+      },
     } // methods
   }
 </script>

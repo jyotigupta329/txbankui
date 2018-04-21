@@ -28,7 +28,6 @@ class AuthService {
 
     axios.request(config).then(function (response) {
       storageService.set('token', response.headers.authorization);
-      console.log(response.headers.authorization);
       let user = jwtDecode(response.headers.authorization).sub;
       storageService.set('user', user);
       store.commit('setToken', response.headers.authorization);
@@ -55,7 +54,11 @@ class AuthService {
       nationality: registerForm.nationality,
       gender: registerForm.gender,
       phone: registerForm.phone,
-      email: registerForm.email
+      email: registerForm.email,
+      idtype1: registerForm.idtype1,
+      idtype2: registerForm.idtype2,
+      idno1: registerForm.idno1,
+      idno2: registerForm.idno2,
     };
 
     const config = {
