@@ -17,7 +17,7 @@
       <q-modal-layout>
         <q-toolbar slot="header">
           <q-toolbar-title>
-            <p>Username :   {{form.username}}</p>
+            <p>Username : {{form.username}}</p>
           </q-toolbar-title>
 
           <q-btn flat @click="closeUsersModal()">
@@ -32,7 +32,7 @@
               <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-12 col-md-5">
                   <q-field helper="First Name">
-                    <q-input v-model="form.firstName" readonly />
+                    <q-input v-model="form.firstName" readonly/>
                   </q-field>
                 </div>
 
@@ -176,7 +176,13 @@
                   <div class="col-12 col-md-14">
                   </div>
                   <div class="col-12 col-md-5">
-                    <q-btn color="primary" rounded @click="$refs.stepper.next()">Approve</q-btn>
+                    <q-btn color="primary" rounded v-if="form.accountStatus === 'Active'"
+                           @click="deActivate(form.username)">Deactivete
+                    </q-btn>
+                    <q-btn color="primary" rounded v-if="form.accountStatus === 'Pending'"
+                           @click="activate(form.username)">
+                      Deactivate
+                    </q-btn>
                   </div>
                 </q-stepper-navigation>
               </div>
@@ -212,7 +218,8 @@
           idtype1: null,
           idtype2: null,
           idno1: null,
-          idno2: null
+          idno2: null,
+          accountStatus: null
         },
         config: {
           rowHeight: '50px',
@@ -267,15 +274,43 @@
       };
     }, //data
 
-    mounted () {
+    mounted() {
       this.usersProfile();
     },
 
     methods: {
-      usersProfile () {
+      usersProfile() {
         const that = this;
         adminDashboardService.getUsersProfile(function (data) {
           that.users = data;
+        }, function (error) {
+          if (error.response && error.response.data && error.response.data.message) {
+            const errorMsg = error.response.data.message;
+            alertService.error(errorMsg);
+          } else {
+            alertService.error(error);
+          }
+        });
+      },
+      activate(username) {
+        const that = this;
+        adminDashboardService.activateAccount(username, function (data) {
+          alertService.info('Account activated');
+          that.closeUsersModal();
+        }, function (error) {
+          if (error.response && error.response.data && error.response.data.message) {
+            const errorMsg = error.response.data.message;
+            alertService.error(errorMsg);
+          } else {
+            alertService.error(error);
+          }
+        });
+      },
+      deActivate(username) {
+        const that = this;
+        adminDashboardService.suspendAccount(username, function (data) {
+          alertService.info('Account activated');
+          that.closeUsersModal();
         }, function (error) {
           if (error.response && error.response.data && error.response.data.message) {
             const errorMsg = error.response.data.message;
