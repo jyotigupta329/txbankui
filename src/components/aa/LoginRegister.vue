@@ -283,8 +283,9 @@
 <script>
   import {alertService} from '@services/AlertService';
   import {authService} from '@services/AuthService';
+
   export default {
-    data () {
+    data() {
       return {
         selectedTab: 'LOGIN',
         refreshLogin: true,
@@ -332,11 +333,11 @@
       }
     }, // data
 
-    mounted () {
+    mounted() {
     },
 
     methods: {
-      tabSelected (tabName) {
+      tabSelected(tabName) {
         alertService.clear();
 
         if (tabName === 'LOGIN') {
@@ -346,10 +347,14 @@
           this.selectedTab = tabName;
         }
       }, // tabSelected
-      login () {
+      login() {
         const that = this;
         authService.login(that.loginForm.username, that.loginForm.password, that.$store, function () {
-          that.$router.push({name: 'account_summary'});
+          if (that.$hasRole('ROLE_USER')) {
+            that.$router.push({ name: 'account_summary' });
+          } else {
+            that.$router.push({ name: 'admin_dashboard' });
+          }
         }, function (error) {
           if (error.response && error.response.data && error.response.data.message) {
             const errorMsg = error.response.data.message;
@@ -359,7 +364,7 @@
           }
         });
       },
-      register () {
+      register() {
         const that = this;
         authService.register(that.form, function () {
           alertService.info('Registration was successful!! Please wait for approval')
