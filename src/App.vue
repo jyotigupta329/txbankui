@@ -16,7 +16,7 @@
 
           <q-popover ref="popover">
             <q-list link class="no-border">
-              <q-item>
+              <q-item @click="accountProfile(), $refs.popover.close()">
                 <q-item-side>
                   <q-item-tile color="secondary" icon="person"/>
                 </q-item-side>
@@ -53,7 +53,7 @@
           </q-side-link>
 
           <q-side-link item to="Beneficiary" exact v-if="$hasRole('ROLE_USER')">
-            <q-item-side icon="payment"/>
+            <q-item-side icon="person_add"/>
             <q-item-main label="Beneficiary"/>
           </q-side-link>
 
@@ -131,6 +131,10 @@
         authService.logout(this.$store, function () {
           that.$router.push({ name: 'login_register' });
         });
+      }, // logout
+      accountProfile() {
+        const that = this;
+        that.$router.push({ name: 'manage_profile' });
       }, // logout
       menuClicked() {
         alertService.clear();

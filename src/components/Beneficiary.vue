@@ -3,21 +3,21 @@
     <q-card>
       <div class="row" style="margin: 10px">
         <div class="col-12 col-md-3">
-          <q-field icon="attach money" helper="Account No">
+          <q-field icon="credit card" helper="Account No">
             <q-input v-model="form.beneficiaryAccountNo"></q-input>
           </q-field>
         </div>
         <div class="col-12 col-md-1">
         </div>
         <div class="col-12 col-md-3">
-          <q-field icon="message" helper="Confirm Account No">
+          <q-field icon="credit card" helper="Confirm Account No">
             <q-input v-model="form.confirmBeneficiaryAccountNo"></q-input>
           </q-field>
         </div>
         <div class="col-12 col-md-1">
         </div>
         <div class="col-12 col-md-3">
-          <q-field icon="message" helper="Nick Name">
+          <q-field icon="account_circle" helper="Nick Name">
             <q-input v-model="form.nickName"></q-input>
           </q-field>
         </div>
