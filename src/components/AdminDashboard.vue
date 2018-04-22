@@ -152,7 +152,7 @@
               <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-12 col-md-5">
                   <q-field helper="Id Type 2 ">
-                    <q-input v-model="form.idtype1" readonly/>
+                    <q-input v-model="form.idtype2" readonly/>
                   </q-field>
                 </div>
 
