@@ -52,6 +52,11 @@
             <q-item-main label="Transfer & Pay"/>
           </q-side-link>
 
+          <q-side-link item to="Beneficiary" exact v-if="$hasRole('ROLE_USER')">
+            <q-item-side icon="payment"/>
+            <q-item-main label="Beneficiary"/>
+          </q-side-link>
+
           <q-side-link item to="StatementDocument" exact v-if="$hasRole('ROLE_USER')">
             <q-item-side icon="pageview"/>
             <q-item-main label="View Statement & Document"/>

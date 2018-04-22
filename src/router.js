@@ -30,6 +30,7 @@ export default new VueRouter({
     { path: '/ManageProfile', name: 'manage_profile', component: load('ManageProfile') },
     { path: '/StatementDocument', name: 'statement_document', component: load('StatementDocument') },
     { path: '/TransferPay', name: 'transfer_pay', component: load('TransferPay') },
+    { path: '/Beneficiary', name: 'beneficiary', component: load('Beneficiary') },
     { path: '/AdminDashboard', name: 'admin_dashboard', component: load('AdminDashboard') },
     { path: '/ManageAlerts', name: 'manage_alerts', component: load('ManageAlerts') },
     // Always leave this last one
