@@ -26,6 +26,41 @@ class AccountService {
     });
   } // login
 
+  transaction(form, successCallback, errorCallback) {
+    form.createdBy = storageService.get('user');
+    const config = {
+      method: 'post',
+      url: 'http://localhost:8888/transaction/',
+      headers: {
+        Authorization: storageService.get('token')
+      }
+    };
+
+    config.data = form;
+
+    axios.request(config).then(function (response) {
+      return successCallback(response.data);
+    }).catch(function (error) {
+      return errorCallback(error);
+    });
+  } // login
+
+  getTransactions(successCallback, errorCallback) {
+    const config = {
+      method: 'get',
+      url: 'http://localhost:8888/transaction/',
+      headers: {
+        Authorization: storageService.get('token')
+      }
+    };
+
+    axios.request(config).then(function (response) {
+      return successCallback(response.data);
+    }).catch(function (error) {
+      return errorCallback(error);
+    });
+  } // login
+
 }
 
 export let accountService = new AccountService();

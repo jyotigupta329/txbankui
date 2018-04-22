@@ -57,7 +57,7 @@
             <q-item-main label="View Statement & Document"/>
           </q-side-link>
 
-          <q-side-link item to="ManageProfile" v-if="$hasRole('ROLE_USER')">
+          <q-side-link item to="ManageProfile" v-if="$hasRole('ROLE_ADMIN') | $hasRole('ROLE_USER')">
             <q-item-side icon="account circle"/>
             <q-item-main label="Manage Your Profile"/>
           </q-side-link>
