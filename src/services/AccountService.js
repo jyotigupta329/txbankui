@@ -24,7 +24,7 @@ class AccountService {
     }).catch(function (error) {
       return errorCallback(error);
     });
-  } // login
+  } // getAccountSummary
 
   transaction(form, successCallback, errorCallback) {
     form.createdBy = storageService.get('user');
@@ -43,12 +43,12 @@ class AccountService {
     }).catch(function (error) {
       return errorCallback(error);
     });
-  } // login
+  } // transaction
 
-  getTransactions(successCallback, errorCallback) {
+  getTransactions(accountNo, successCallback, errorCallback) {
     const config = {
       method: 'get',
-      url: 'http://localhost:8888/transaction/',
+      url: 'http://localhost:8888/transaction/' + accountNo,
       headers: {
         Authorization: storageService.get('token')
       }
@@ -59,7 +59,53 @@ class AccountService {
     }).catch(function (error) {
       return errorCallback(error);
     });
-  } // login
+  } // getTransactions
+
+  getUserAccounts(successCallback, errorCallback) {
+    const config = {
+      method: 'get',
+      url: 'http://localhost:8888/accounts/',
+      headers: {
+        Authorization: storageService.get('token')
+      }
+    };
+    axios.request(config).then(function (response) {
+      return successCallback(response.data);
+    }).catch(function (error) {
+      return errorCallback(error);
+    });
+  } // getUserAccounts
+
+  getBeneficiaryAccounts(successCallback, errorCallback) {
+    const config = {
+      method: 'get',
+      url: 'http://localhost:8888/accounts/beneficiary',
+      headers: {
+        Authorization: storageService.get('token')
+      }
+    };
+    axios.request(config).then(function (response) {
+      return successCallback(response.data);
+    }).catch(function (error) {
+      return errorCallback(error);
+    });
+  } // getBeneficiaryAccounts
+
+  addBeneficiary(beneficiaryform, successCallback, errorCallback) {
+    const config = {
+      method: 'post',
+      url: 'http://localhost:8888/accounts/beneficiary',
+      headers: {
+        Authorization: storageService.get('token')
+      }
+    };
+    config.data = beneficiaryform;
+    axios.request(config).then(function (response) {
+      return successCallback(response.data);
+    }).catch(function (error) {
+      return errorCallback(error);
+    });
+  } // addBeneficiary
 
 }
 
