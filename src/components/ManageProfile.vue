@@ -8,7 +8,7 @@
       <q-tab-pane name="UPDATE_PROFILE">
         <div class="row" style="margin: 0px 0px 0px 10px;">
           <div class="col-12 col-md-4">
-            <q-field helper="Email" icon="email" :error="$v.form.email.$error" :error-label="`Email is required`">
+            <q-field helper="Email" icon="email" :error="$v.form.email.$error" :error-label="`Email ${errorMsg($v.form.email)}`">
               <q-input v-model="form.email" type="email" @blur="$v.form.email.$touch">
               </q-input>
             </q-field>
@@ -16,8 +16,8 @@
           <div class="col-12 col-md-1">
           </div>
           <div class="col-12 col-md-4">
-            <q-field helper="Phone" icon="phone">
-              <q-input v-model="form.phone">
+            <q-field helper="Phone" icon="phone" :error="$v.form.phone.$error" :error-label="`Phone is required`">
+              <q-input v-model="form.phone" @blur="$v.form.phone.$touch">
               </q-input>
             </q-field>
           </div>
@@ -26,8 +26,8 @@
 
         <div class="row" style="margin: 0px 0px 0px 10px;">
           <div class="col-12 col-md-4">
-            <q-field helper="Address 1" icon="home">
-              <q-input v-model="form.address1">
+            <q-field helper="Address 1" icon="home" :error="$v.form.address1.$error" :error-label="`Address1 is required`">
+              <q-input v-model="form.address1"  @blur="$v.form.address1.$touch">
               </q-input>
             </q-field>
           </div>
@@ -42,32 +42,32 @@
         </div>
         <div class="row" style="margin: 0px 0px 0px 10px;">
           <div class="col-12 col-md-4">
-            <q-field helper="City" icon="location city">
-              <q-input v-model="form.city">
+            <q-field helper="City" icon="location city" :error="$v.form.city.$error" :error-label="`City is required`">
+              <q-input v-model="form.city"  @blur="$v.form.city.$touch">
               </q-input>
             </q-field>
           </div>
           <div class="col-12 col-md-1">
           </div>
           <div class="col-12 col-md-4">
-            <q-field helper="State" icon="location city">
-              <q-input v-model="form.state">
+            <q-field helper="State" icon="location city" :error="$v.form.state.$error" :error-label="`State is required`">
+              <q-input v-model="form.state"  @blur="$v.form.state.$touch">
               </q-input>
             </q-field>
           </div>
         </div>
         <div class="row" style="margin: 0px 0px 0px 10px;">
           <div class="col-12 col-md-4">
-            <q-field helper="Zip" icon="fiber pin">
-              <q-input v-model="form.zip">
+            <q-field helper="Zip" icon="fiber pin" :error="$v.form.zip.$error" :error-label="`Zip is required`">
+              <q-input v-model="form.zip"  @blur="$v.form.zip.$touch">
               </q-input>
             </q-field>
           </div>
           <div class="col-12 col-md-1">
           </div>
           <div class="col-12 col-md-4">
-            <q-field helper="Nationality" icon="flag">
-              <q-input v-model="form.nationality">
+            <q-field helper="Nationality" icon="flag" :error="$v.form.nationality.$error" :error-label="`Nationality is required`">
+              <q-input v-model="form.nationality"  @blur="$v.form.nationality.$touch">
               </q-input>
             </q-field>
           </div>
@@ -121,7 +121,7 @@
 <script>
   import {alertService} from '@services/AlertService';
   import {manageProfileService} from '@services/ManageProfileService';
-  import {required} from 'vuelidate/lib/validators'
+  import {required, minLength, maxLength} from 'vuelidate/lib/validators'
 
   export default {
     data() {
@@ -150,6 +150,26 @@
     validations: {
       form: {
         email: {
+          required
+        },
+        phone: {
+          required,
+          minLength: minLength(10),
+          maxLength: maxLength(10)
+        },
+        address1: {
+          required
+        },
+        city: {
+          required
+        },
+        state: {
+          required
+        },
+        zip: {
+          required
+        },
+        nationality: {
           required
         }
       }
@@ -221,6 +241,14 @@
           }
         });
       },
+
+      errorMsg(item){
+        if (!item.$error) return '';
+        if (typeof (item.required) !== 'undefined' && !item.required) return `is required`;
+        if (typeof (item.email) !== 'undefined' && !item.email) return `is not valid`;
+        if (typeof (item.alpha) !== 'undefined' && !item.alpha) return `accepts only alphabet characters`;
+        if (typeof (item.numeric) !== 'undefined' && !item.numeric) return `accepts only numeric`;
+      }
     } // methods
   }
 </script>

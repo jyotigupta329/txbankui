@@ -51,6 +51,7 @@ class ManageProfileService {
     const config = {
       method: 'put',
       url: 'http://localhost:8888/users/changePassword/' + storageService.get('user'),
+      // storageService.get('user') this is the username taken for cache
       headers: {
         Authorization: storageService.get('token')
       }

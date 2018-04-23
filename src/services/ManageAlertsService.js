@@ -10,10 +10,10 @@ class ManageAlertsService {
   constructor() {
   }
 
-  getUserAlertDetails(successCallback, errorCallback) {
+  getNotificationPolicy(successCallback, errorCallback) {
     const config = {
       method: 'get',
-      url: 'http://localhost:8888/users/profile/' + storageService.get('user'),
+      url: 'http://localhost:8888/notification',
       headers: {
         Authorization: storageService.get('token')
       }
@@ -25,6 +25,27 @@ class ManageAlertsService {
       return errorCallback(error);
     });
   } // login
+
+  updateNotificationPolicy(notificationForm, successCallback, errorCallback) {
+    notificationForm.username = storageService.get('user');
+    const config = {
+      method: 'put',
+      url: 'http://localhost:8888/notification' ,
+      headers: {
+        Authorization: storageService.get('token')
+      }
+    };
+
+    if (notificationForm) {
+      config.data = notificationForm;
+    }
+
+    axios.request(config).then(function (response) {
+      return successCallback();
+    }).catch(function (error) {
+      return errorCallback(error);
+    });
+  } // update
 
 }
 
