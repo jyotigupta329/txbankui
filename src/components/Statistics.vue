@@ -10,7 +10,7 @@
       </q-card-title>
       <q-card-separator/>
       <q-card-main>
-        <doughnut-chart :chart-data="chartData" :options="chartOptions" v-if="notEmpty"></doughnut-chart>
+        <doughnut-chart :chart-data="checkingChartData" :options="chartOptions" v-if="notEmptyCA"></doughnut-chart>
       </q-card-main>
     </q-card>
 
@@ -24,7 +24,7 @@
       </q-card-title>
       <q-card-separator/>
       <q-card-main>
-        <doughnut-chart :chart-data="chartData" :options="chartOptions" v-if="notEmpty"></doughnut-chart>
+        <doughnut-chart :chart-data="savingsChartData" :options="chartOptions" v-if="notEmptySA"></doughnut-chart>
       </q-card-main>
     </q-card>
 
@@ -33,15 +33,21 @@
 
 <script>
   import {alertService} from '@services/AlertService';
-  import {restService} from '@services/RestService';
+  import {accountService} from '@services/AccountService'
 
   export default {
     data() {
       return {
-        criticalCount: 0,
-        majorCount: 0,
-        minorCount: 0,
-        clearCount: 0,
+        checkingAccountNo: null,
+        savingAccountNo: null,
+        checkingAccountChart: {
+          totalCredit: 0,
+          totalDebit: 0
+        },
+        savingsAccountChart: {
+          totalCredit: 0,
+          totalDebit: 0
+        },
         chartOptions: {
           legend: false,
           responsive: true,
@@ -54,18 +60,33 @@
     }, // data
 
     computed: {
-      chartData() {
+      checkingChartData() {
         return {
-          labels: ['CRITICAL', 'MAJOR', 'MINOR', 'CLEAR'],
+          labels: ['CREDIT', 'DEBIT'],
           datasets: [{
-            data: [this.criticalCount, this.majorCount, this.minorCount, this.clearCount],
-            backgroundColor: ['red', 'orange', 'yellow', 'lightgreen']
+            data: [this.checkingAccountChart.totalCredit, this.checkingAccountChart.totalDebit],
+            backgroundColor: ['green', 'orange']
           }]
         };
       },
+      savingsChartData() {
+        return {
+          labels: ['CREDIT', 'DEBIT'],
+          datasets: [{
+            data: [this.savingsAccountChart.totalCredit, this.savingsAccountChart.totalDebit],
+            backgroundColor: ['green', 'orange']
+          }]
+        };
+      },
+      notEmptyCA() {
+        if (this.checkingAccountChart.totalCredit > 0 || this.checkingAccountChart.totalDebit > 0) {
+          return true;
+        }
 
-      notEmpty() {
-        if (this.criticalCount > 0 || this.majorCount > 0 || this.minorCount > 0) {
+        return false;
+      },
+      notEmptySA() {
+        if (this.savingsAccountChart.totalCredit > 0 || this.savingsAccountChart.totalDebit > 0) {
           return true;
         }
 
@@ -73,26 +94,73 @@
       }
     }, // computed
 
-    watch: {
-      refreshComponent() {
-        this.refresh();
-      }
-    }, // watch
-
     mounted() {
-      this.refresh();
+      this.getAccounts();
     }, // mounted
 
     methods: {
-      refresh() {
+      getCheckingTransactions() {
         const that = this;
+        accountService.getTransactions(that.checkingAccountNo, function (data) {
+          data.forEach(function (account) {
+            if (account.transactionType === 'CREDIT') {
+              that.checkingAccountChart.totalCredit += account.amount;
+            } else {
+              that.checkingAccountChart.totalDebit += account.amount;
+            }
+          });
+        }, function (error) {
+          if (error.response && error.response.data && error.response.data.message) {
+            const errorMsg = error.response.data.message;
+            alertService.error(errorMsg);
+          } else {
+            alertService.error(error);
+          }
+        });
+      },
+      getSavingsTransactions() {
+        const that = this;
+        that.savingsAccountChart.totalCredit = 0;
+        accountService.getTransactions(that.savingAccountNo, function (data) {
+          data.forEach(function (account) {
+            if (account.transactionType === 'CREDIT') {
+              that.savingsAccountChart.totalCredit += account.amount;
+            } else {
+              that.savingsAccountChart.totalDebit += account.amount;
+            }
+          });
+        }, function (error) {
+          if (error.response && error.response.data && error.response.data.message) {
+            const errorMsg = error.response.data.message;
+            alertService.error(errorMsg);
+          } else {
+            alertService.error(error);
+          }
+        });
 
-        that.criticalCount = 0;
-        that.majorCount = 4;
-        that.minorCount = 3;
-        that.clearCount = 1;
 
-      }
+      },
+      getAccounts() {
+        const that = this;
+        accountService.getUserAccounts(function (data) {
+          data.forEach(function (account) {
+            if (account.type === 'CHECKING') {
+              that.checkingAccountNo = account.accountNo;
+            } else {
+              that.savingAccountNo = account.accountNo;
+            }
+          });
+          that.getCheckingTransactions();
+          that.getSavingsTransactions();
+        }, function (error) {
+          if (error.response && error.response.data && error.response.data.message) {
+            const errorMsg = error.response.data.message;
+            alertService.error(errorMsg);
+          } else {
+            alertService.error(error);
+          }
+        });
+      },
     }
   }
 </script>
