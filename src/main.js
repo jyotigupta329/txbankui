@@ -13,6 +13,10 @@ require('./themes/app.' + __THEME + '.styl');
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Vuelidate from 'vuelidate';
+import DoughnutChart from '@charts/DoughnutChart';
+import BarChart from '@charts/BarChart';
+import HorizontalBarChart from '@charts/HorizontalBarChart';
+
 import Quasar, {
   BackToTop,
   Ripple,
@@ -79,6 +83,7 @@ Vue.config.productionTip = false
 Vue.use(Vuex);
 Vue.use(AuthPlugin);
 Vue.use(Vuelidate);
+
 Vue.use(Quasar, {
   components: {
     QLayout,
@@ -169,6 +174,11 @@ const store = new Vuex.Store({
     }
   }
 });
+
+Vue.component('doughnut-chart', DoughnutChart);
+Vue.component('bar-chart', BarChart);
+Vue.component('horizontal-bar-chart', HorizontalBarChart);
+
 
 if (__THEME === 'mat') {
   require('quasar-extras/roboto-font')

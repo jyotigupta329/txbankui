@@ -57,9 +57,9 @@
             <q-item-main label="Beneficiary"/>
           </q-side-link>
 
-          <q-side-link item to="StatementDocument" exact v-if="$hasRole('ROLE_USER')">
+          <q-side-link item to="Statistics" exact v-if="$hasRole('ROLE_USER')">
             <q-item-side icon="pageview"/>
-            <q-item-main label="View Statement & Document"/>
+            <q-item-main label="Statistics"/>
           </q-side-link>
 
           <q-side-link item to="ManageProfile" v-if="$hasRole('ROLE_ADMIN') | $hasRole('ROLE_USER')">
