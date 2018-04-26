@@ -8,7 +8,8 @@
       <q-tab-pane name="UPDATE_PROFILE">
         <div class="row" style="margin: 0px 0px 0px 10px;">
           <div class="col-12 col-md-4">
-            <q-field helper="Email" icon="email" :error="$v.form.email.$error" :error-label="`Email ${errorMsg($v.form.email)}`">
+            <q-field helper="Email" icon="email" :error="$v.form.email.$error"
+                     :error-label="`Email ${errorMsg($v.form.email)}`">
               <q-input v-model="form.email" type="email" @blur="$v.form.email.$touch">
               </q-input>
             </q-field>
@@ -26,8 +27,9 @@
 
         <div class="row" style="margin: 0px 0px 0px 10px;">
           <div class="col-12 col-md-4">
-            <q-field helper="Address 1" icon="home" :error="$v.form.address1.$error" :error-label="`Address1 is required`">
-              <q-input v-model="form.address1"  @blur="$v.form.address1.$touch">
+            <q-field helper="Address 1" icon="home" :error="$v.form.address1.$error"
+                     :error-label="`Address1 is required`">
+              <q-input v-model="form.address1" @blur="$v.form.address1.$touch">
               </q-input>
             </q-field>
           </div>
@@ -43,15 +45,16 @@
         <div class="row" style="margin: 0px 0px 0px 10px;">
           <div class="col-12 col-md-4">
             <q-field helper="City" icon="location city" :error="$v.form.city.$error" :error-label="`City is required`">
-              <q-input v-model="form.city"  @blur="$v.form.city.$touch">
+              <q-input v-model="form.city" @blur="$v.form.city.$touch">
               </q-input>
             </q-field>
           </div>
           <div class="col-12 col-md-1">
           </div>
           <div class="col-12 col-md-4">
-            <q-field helper="State" icon="location city" :error="$v.form.state.$error" :error-label="`State is required`">
-              <q-input v-model="form.state"  @blur="$v.form.state.$touch">
+            <q-field helper="State" icon="location city" :error="$v.form.state.$error"
+                     :error-label="`State is required`">
+              <q-input v-model="form.state" @blur="$v.form.state.$touch">
               </q-input>
             </q-field>
           </div>
@@ -59,15 +62,16 @@
         <div class="row" style="margin: 0px 0px 0px 10px;">
           <div class="col-12 col-md-4">
             <q-field helper="Zip" icon="fiber pin" :error="$v.form.zip.$error" :error-label="`Zip is required`">
-              <q-input v-model="form.zip"  @blur="$v.form.zip.$touch">
+              <q-input v-model="form.zip" @blur="$v.form.zip.$touch">
               </q-input>
             </q-field>
           </div>
           <div class="col-12 col-md-1">
           </div>
           <div class="col-12 col-md-4">
-            <q-field helper="Nationality" icon="flag" :error="$v.form.nationality.$error" :error-label="`Nationality is required`">
-              <q-input v-model="form.nationality"  @blur="$v.form.nationality.$touch">
+            <q-field helper="Nationality" icon="flag" :error="$v.form.nationality.$error"
+                     :error-label="`Nationality is required`">
+              <q-input v-model="form.nationality" @blur="$v.form.nationality.$touch">
               </q-input>
             </q-field>
           </div>
@@ -89,16 +93,18 @@
         <div>
           <div class="row" style="margin: 0px 0px 0px 10px;">
             <div class="col-md-4">
-              <q-field helper="Password" icon="vpn key">
-                <q-input v-model="form.password" type="password">
+              <q-field helper="Password" icon="vpn key" :error="$v.passwordForm.password.$error"
+                       :error-label="`Password ${errorMsg($v.passwordForm.password)}`">
+                <q-input v-model="passwordForm.password" type="password" @blur="$v.passwordForm.password.$touch">
                 </q-input>
               </q-field>
             </div>
           </div>
           <div class="row" style="margin: 0px 0px 0px 10px;">
             <div class="col-md-4">
-              <q-field helper="Confirm Password" icon="vpn key">
-                <q-input v-model="form.confirmPassword" type="password">
+              <q-field helper="Confirm Password" icon="vpn key" :error="$v.passwordForm.confirmPassword.$error"
+                       :error-label="`Confirm Password ${errorMsg($v.passwordForm.confirmPassword)}`">
+                <q-input v-model="passwordForm.confirmPassword" type="password" @blur="$v.passwordForm.confirmPassword.$touch">
                 </q-input>
               </q-field>
             </div>
@@ -106,7 +112,7 @@
           <div class="row" style="margin: 0px 0px 0px 10px;">
             <div class="col-12 col-md-4"/>
             <div class="col-10 col-md-4">
-              <q-btn rounded color="primary" @click="updatePassword">
+              <q-btn rounded color="primary" :disabled="$v.passwordForm.$invalid" @click="updatePassword">
                 Submit
               </q-btn>
             </div>
@@ -121,7 +127,7 @@
 <script>
   import {alertService} from '@services/AlertService';
   import {manageProfileService} from '@services/ManageProfileService';
-  import {required, minLength, maxLength} from 'vuelidate/lib/validators'
+  import {required, minLength, maxLength, email, sameAs} from 'vuelidate/lib/validators'
 
   export default {
     data() {
@@ -129,13 +135,11 @@
         selectedTab: 'UPDATE_PROFILE',
         refreshLogin: true,
         refreshRegister: true,
-        loginForm: {
-          username: null,
-          password: null
+        passwordForm: {
+          password: null,
+          confirmPassword: null
         },
         form: {
-          password: null,
-          confirmPassword: null,
           address1: null,
           address2: null,
           city: null,
@@ -150,7 +154,8 @@
     validations: {
       form: {
         email: {
-          required
+          required,
+          email
         },
         phone: {
           required,
@@ -171,6 +176,15 @@
         },
         nationality: {
           required
+        },
+      },
+      passwordForm: {
+        password: {
+          required
+        },
+        confirmPassword: {
+          required,
+          sameAsPassword: sameAs('password')
         }
       }
     },
@@ -230,7 +244,7 @@
 
       updatePassword () {
         const that = this;
-        manageProfileService.updatePassword(that.form, function () {
+        manageProfileService.updatePassword(that.passwordForm, function () {
           alertService.info('Your password has been successfully updated');
         }, function (error) {
           if (error.response && error.response.data && error.response.data.message) {
@@ -248,6 +262,8 @@
         if (typeof (item.email) !== 'undefined' && !item.email) return `is not valid`;
         if (typeof (item.alpha) !== 'undefined' && !item.alpha) return `accepts only alphabet characters`;
         if (typeof (item.numeric) !== 'undefined' && !item.numeric) return `accepts only numeric`;
+        if (typeof (item.password) !== 'undefined' && !item.password) return `password does not match`;
+        if (typeof (item.sameAsPassword) !== 'undefined' && !item.sameAsPassword) return `does not match the password`;
       }
     } // methods
   }

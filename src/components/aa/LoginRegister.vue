@@ -66,16 +66,18 @@
               </div>
               <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-md-4">
-                  <q-field helper="Password" icon="vpn key">
-                    <q-input v-model="form.password" type="password">
+                  <q-field helper="Password" icon="vpn key" :error="$v.form.password.$error"
+                           :error-label="`Password ${errorMsg($v.form.password)}`">
+                    <q-input v-model="form.password" type="password" @blur="$v.form.password.$touch">
                     </q-input>
                   </q-field>
                 </div>
               </div>
               <div class="row" style="margin: 0px 0px 0px 10px;">
                 <div class="col-md-4">
-                  <q-field helper="Confirm Password" icon="vpn key">
-                    <q-input v-model="form.confirmPassword" type="password">
+                  <q-field helper="Confirm Password" icon="vpn key" :error="$v.form.confirmPassword.$error"
+                           :error-label="`Confirm Password ${errorMsg($v.form.confirmPassword)}`">
+                    <q-input v-model="form.confirmPassword" type="password" @blur="$v.form.confirmPassword.$touch">
                     </q-input>
                   </q-field>
                 </div>
@@ -139,8 +141,9 @@
                 <div class="col-12 col-md-1">
                 </div>
                 <div class="col-12 col-md-4">
-                  <q-field helper="Email" icon="email">
-                    <q-input v-model="form.email" type="email">
+                  <q-field helper="Email" icon="email" :error="$v.form.email.$error"
+                           :error-label="`Email ${errorMsg($v.form.email)}`">
+                    <q-input v-model="form.email" type="email" @blur="$v.form.email.$touch">
                     </q-input>
                   </q-field>
                 </div>
@@ -161,7 +164,7 @@
               </div>
 
               <q-stepper-navigation>
-                <q-btn color="secondary" rounded @click="$refs.stepper.previous()">Back</q-btn>
+                <q-btn color="primary" rounded @click="$refs.stepper.previous()">Back</q-btn>
                 <q-btn color="primary" rounded @click="$refs.stepper.next()">Next</q-btn>
               </q-stepper-navigation>
             </q-step>
@@ -217,7 +220,7 @@
 
               </div>
               <q-stepper-navigation>
-                <q-btn color="secondary" rounded @click="$refs.stepper.previous()">Back</q-btn>
+                <q-btn color="primary" rounded @click="$refs.stepper.previous()">Back</q-btn>
                 <q-btn color="primary" rounded @click="$refs.stepper.next()">Next</q-btn>
               </q-stepper-navigation>
 
@@ -264,16 +267,12 @@
 
               <div class="row" style="margin: 0px 0px 0px 0px;">
                 <q-stepper-navigation>
-                  <q-btn color="secondary" rounded @click="$refs.stepper.previous()">Back</q-btn>
-                  <q-btn color="primary" rounded @click="register">Register</q-btn>
+                  <q-btn color="primary" rounded @click="$refs.stepper.previous()">Back</q-btn>
+                  <q-btn color="primary" rounded @click="register" :disabled="$v.form.$invalid">Register</q-btn>
                 </q-stepper-navigation>
               </div>
             </q-step>
-
-
           </q-stepper>
-
-
         </div>
       </q-tab-pane>
     </q-tabs>
@@ -283,7 +282,7 @@
 <script>
   import {alertService} from '@services/AlertService';
   import {authService} from '@services/AuthService';
-
+  import {required, email, sameAs} from 'vuelidate/lib/validators'
   export default {
     data() {
       return {
@@ -333,6 +332,40 @@
       }
     }, // data
 
+    validations: {
+      form: {
+        email: {
+          required,
+          email
+        },
+        phone: {
+          required
+        },
+        address1: {
+          required
+        },
+        city: {
+          required
+        },
+        state: {
+          required
+        },
+        zip: {
+          required
+        },
+        nationality: {
+          required
+        },
+        password: {
+          required
+        },
+        confirmPassword: {
+          required,
+          sameAsPassword: sameAs('password')
+        }
+      }
+    },
+
     mounted() {
     },
 
@@ -351,9 +384,9 @@
         const that = this;
         authService.login(that.loginForm.username, that.loginForm.password, that.$store, function () {
           if (that.$hasRole('ROLE_USER')) {
-            that.$router.push({ name: 'account_summary' });
+            that.$router.push({name: 'account_summary'});
           } else {
-            that.$router.push({ name: 'admin_dashboard' });
+            that.$router.push({name: 'admin_dashboard'});
           }
         }, function (error) {
           if (error.response && error.response.data && error.response.data.message) {
@@ -376,6 +409,15 @@
             alertService.error(error);
           }
         });
+      },
+
+      errorMsg(item){
+        if (!item.$error) return '';
+        if (typeof (item.required) !== 'undefined' && !item.required) return `is required`;
+        if (typeof (item.email) !== 'undefined' && !item.email) return `is not valid`;
+        if (typeof (item.alpha) !== 'undefined' && !item.alpha) return `accepts only alphabet characters`;
+        if (typeof (item.numeric) !== 'undefined' && !item.numeric) return `accepts only numeric`;
+        if (typeof (item.sameAsPassword) !== 'undefined' && !item.sameAsPassword) return `does not match the password`;
       }
     } // methods
   }
